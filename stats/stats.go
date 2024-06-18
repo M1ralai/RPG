@@ -9,9 +9,9 @@ import (
 var Hp, Damage, Armour int
 
 func Stats() {
-	Hp = (150) + (50 * Level)
-	Damage = (30 + market.Itemdamage) + (30 * Level) + (Level*market.Itemdamage)/2
-	Armour = (15 + market.Itemarmour) + (5 * Level) + (Level*market.Itemarmour)/2
+	Hp = 150 + 50*Level
+	Damage = 30 + market.Itemdamage + 30*Level + (Level*market.Itemdamage)/2
+	Armour = 15 + market.Itemarmour + 5*Level + (Level*market.Itemarmour)/2
 }
 func Stats_Visualisation() {
 	var decision int

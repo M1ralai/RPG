@@ -10,7 +10,7 @@ import (
 )
 
 func Fight() {
-	var decision, monster_damage, monster_armour, monster_hp, monster_exp, monster_gold, rng, hit1, hit2 int
+	var decision, monster_damage, monster_armour, monster_hp, monster_exp, monster_gold, rng, hit1, hit2, fight_hp, monster_fight_hp int
 	var loop bool
 	var monster_name string
 	scarab := monsters{"Scarab", 100, 25, 20, 50, 50}
@@ -41,7 +41,7 @@ func Fight() {
 		monster_armour = 100
 		monster_name = "Skeleton"
 	}
-	fmt.Printf("\n  %v hp: %v \n  %v armour: %v \n  %v Damage: %v \n\n Do you accept this fight? \n\n 1.Yes \n\n 2.No return monster hub \n\n 3.No return main menu\n", monster_name, monster_name, monster_name, monster_hp, monster_armour, monster_damage)
+	fmt.Printf("\n  %v hp: %v \n  armour: %v \n  Damage: %v \n\n Do you accept this fight? \n\n 1.Yes \n\n 2.No return monster hub \n\n 3.No return main menu\n", monster_name, monster_hp, monster_armour, monster_damage)
 	loop = false
 	if stats.Armour >= monster_damage {
 		fmt.Println("You are too strong for this monster; You have to go main menu...")
@@ -51,19 +51,24 @@ func Fight() {
 			fmt.Scanln(&decision)
 			switch {
 			case decision == 1:
-				for stats.Hp >= 0 && monster_hp >= 0 {
-					rng = rand.IntN(40)
+				stats.Stats()
+				monster_fight_hp = monster_hp
+				fight_hp = stats.Hp
+				for fight_hp >= 0 && monster_fight_hp >= 0 {
 					duration := time.Second
 					time.Sleep(duration)
+					rng = rand.IntN(40)
 					hit1 = (stats.Damage * (80 + rng) / 100) * (150 - monster_armour) / 150
-					monster_hp = monster_hp - hit1
+					monster_fight_hp -= hit1
 					rng = rand.IntN(40)
 					hit2 = (monster_damage * (80 + rng) / 100) * (150 - stats.Armour) / 150
-					stats.Hp = stats.Hp - hit2
-					if stats.Hp >= 0 && monster_hp >= 0 {
-						fmt.Printf("\n\n %v attacked you and hit: %v \n You have %v hp now. \n\n", monster_name, hit2, stats.Hp)
-						fmt.Printf(" \n\n Your attacked and hit: %v \n %v have %v hp now. \n\n", hit1, monster_name, monster_hp)
-					} else if stats.Hp >= 0 {
+					fight_hp -= hit2
+					if fight_hp >= 0 && monster_fight_hp >= 0 {
+						fmt.Printf("\n\n %v attacked you and hit: %v \n You have %v hp now. \n\n", monster_name, hit2, fight_hp)
+						Warrior_Hp_Indicator(stats.Hp, fight_hp)
+						fmt.Printf(" \n\n Your attacked and hit: %v \n %v have %v hp now. \n\n", hit1, monster_name, monster_fight_hp)
+						Monsters_Hp_Indicators(monster_hp, monster_fight_hp)
+					} else if monster_fight_hp >= 0 {
 						fmt.Println(" \n \nYou win!!! \n \n")
 						stats.Exp = stats.Exp + monster_exp
 						fmt.Printf(" You earned %v experience;\n\n You gained %v gold ", stats.Exp, monster_gold)
