@@ -13,24 +13,28 @@ func Fight() {
 	var decision, monster_damage, monster_armour, monster_hp, monster_exp, monster_gold, rng, hit1, hit2 int
 	var loop bool
 	var monster_name string
+	scarab := monsters{"Scarab", 100, 25, 20, 50, 50}
+	zombie := monsters{"Zombie", 150, 100, 50, 75, 100}
+	skeleton := monsters{"Skeleton", 150, 100, 50, 75, 100}
 	if Monster_Decision == 1 {
-		monster_hp = 100 + (20 * stats.Level)
-		if monster_armour <= 100 {
-			monster_armour = 50 + (10 * stats.Level)
+		monster_hp = scarab.hp + (20 * stats.Level)
+		monster_armour = scarab.armour + (10 * stats.Level)
+		if monster_armour >= 100 {
+			monster_armour = 100
 		}
-		monster_damage = 25 + (15 * stats.Level)
-		monster_damage = 20 + (10 * stats.Level)
-		monster_exp = 50 + (10 * stats.Level)
-		monster_name = "Scarab"
+		monster_gold = scarab.gold + (stats.Level * 20)
+		monster_damage = scarab.damage + (15 * stats.Level)
+		monster_exp = scarab.exp + (10 * stats.Level)
+		monster_name = scarab.name
 	} else if Monster_Decision == 2 {
-		monster_hp = 150 + (30 * stats.Level)
-		monster_damage = 100 + (30 * stats.Level)
-		monster_gold = 50 + (50 * stats.Level)
-		monster_exp = 75 + (50 * stats.Level)
-		monster_armour = 100
+		monster_hp = zombie.hp + (30 * stats.Level)
+		monster_damage = zombie.damage + (30 * stats.Level)
+		monster_gold = zombie.gold + (50 * stats.Level)
+		monster_exp = zombie.exp + (50 * stats.Level)
+		monster_armour = zombie.armour
 		monster_name = "Zombie"
 	} else if Monster_Decision == 3 {
-		monster_hp = 150 + (30 * stats.Level)
+		monster_hp = skeleton.hp + (30 * stats.Level)
 		monster_damage = 100 + (30 * stats.Level)
 		monster_gold = 50 + (50 * stats.Level)
 		monster_exp = 75 + (50 * stats.Level)
@@ -43,7 +47,7 @@ func Fight() {
 		fmt.Println("You are too strong for this monster; You have to go main menu...")
 
 	} else {
-		for loop == false {
+		for !loop {
 			fmt.Scanln(&decision)
 			switch {
 			case decision == 1:
@@ -72,17 +76,23 @@ func Fight() {
 						loop = true
 					}
 				}
-				break
 			case decision == 2:
 				Monsters()
 				loop = true
-				break
 			case decision == 3:
 				loop = true
-				break
 			default:
 				fmt.Println("Please choose one od the options.")
 			}
 		}
 	}
+}
+
+type monsters struct {
+	name   string
+	hp     int
+	damage int
+	gold   int
+	exp    int
+	armour int
 }

@@ -21,7 +21,7 @@ func Exp_Level() {
 	}
 	loop = false
 
-	for loop == false {
+	for !loop {
 		fmt.Scanln(&decision)
 		switch {
 		case decision == 1:

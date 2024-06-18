@@ -19,7 +19,7 @@ func Stats_Visualisation() {
 	fmt.Printf("\n   Your hp: %v \n   Your armour: %v \n   Your damage: %v \n", Hp, Armour, Damage)
 	fmt.Println(" \n 1. Return main menu \n\n 2.Quit")
 	loop = false
-	for loop == false {
+	for !loop {
 		fmt.Scanln(&decision)
 		if decision == 1 {
 			loop = true

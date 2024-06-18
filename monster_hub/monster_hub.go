@@ -10,8 +10,7 @@ func Monsters() {
 	var loop bool
 	var decision int
 	fmt.Println("You entered this endless space, so tell me qich one do you wanna fight?\n 1. Scarab\n 2. Zombie\n 3. Skeleton \n 4.Return menu\n")
-	loop = false
-	for loop == false {
+	for !loop {
 		fmt.Scanln(&decision)
 		switch {
 		case decision == 1:
@@ -31,7 +30,6 @@ func Monsters() {
 			loop = true
 		case decision == 4:
 			loop = true
-			break
 		default:
 			fmt.Println("Please choose one of the options")
 		}
